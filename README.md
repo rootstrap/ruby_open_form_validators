@@ -1,8 +1,6 @@
 # RubyOpenFormValidators
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/ruby_open_form_validators`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Ruby gem for validating OpenForm. It supports several validators such as *minValue*, *maxValue*, *minLength*, *maxLength*, *minDate, *maxDate, *earliestToday, *email*
 
 ## Installation
 
@@ -22,7 +20,39 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Passing validations will return the same result.
+```ruby
+$ RubyOpenFormValidators.validate("50", "minValue25"):
+{ valid: true, message: nil }
+```
+
+Failing validations will return different messages according to the used validator.
+Examples of every supported validator:
+```ruby
+$ RubyOpenFormValidators.validate("20", "minValue25")
+{ valid: false, message: "20 should be greater than 25" }
+
+$ RubyOpenFormValidators.validate("100", "maxValue80")
+{ valid: false, message: "100 should be less than 80" }
+
+$ RubyOpenFormValidators.validate("hello world", "minLength20")
+{ valid: false, message: "Should be longer than 20 characters" }
+
+$ RubyOpenFormValidators.validate("hello world", "maxLength8")
+{ valid: false, message: "Should be shorter than 8 characters" }
+
+$ RubyOpenFormValidators.validate("20190905", "minDate20190806")
+{ valid: false, message: "Date should be after 20190806" }
+
+$ RubyOpenFormValidators.validate("20190907", "maxDate20190806")
+{ valid: false, message: "Date should be before 20190806" }
+
+$ RubyOpenFormValidators.validate("20181206", "earliestToday")
+{ valid: false, message: "Date should be after today's date" }
+
+$ RubyOpenFormValidators.validate("@example.com", "email")
+{ valid: false, message: "Wrong email format" }
+```
 
 ## Development
 
@@ -40,4 +70,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the RubyOpenFormValidators project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/ruby_open_form_validators/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the RubyOpenFormValidators project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/rootstrap/ruby_open_form_validators/blob/master/CODE_OF_CONDUCT.md).
