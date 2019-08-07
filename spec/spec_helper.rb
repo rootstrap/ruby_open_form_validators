@@ -1,5 +1,6 @@
 require "bundler/setup"
 require "ruby_open_form_validators"
+require "active_support/core_ext/numeric/time"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
