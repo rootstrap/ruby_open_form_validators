@@ -6,7 +6,7 @@ RSpec.describe RubyOpenFormValidators do
   end
 
   subject(:validate) do
-    result = RubyOpenFormValidators.validate(value: test_value, validator: test_validator)
+    result = RubyOpenFormValidators.validate(test_value, test_validator)
     result[:valid]
   end
 
