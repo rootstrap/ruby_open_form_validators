@@ -215,4 +215,115 @@ RSpec.describe RubyOpenFormValidators do
       end
     end
   end
+
+  describe 'min_value and max_value' do
+    let(:test_value) { '10' }
+    context 'is_valid' do
+      let(:test_validator) { 'minValue5,maxValue15' }
+      it 'returns true when min value < value < max value' do
+        expect(validate).to be_truthy
+      end
+
+      let(:test_validator) { 'minValue10,maxValue15' }
+      it 'returns true when min value == value < max value' do
+        expect(validate).to be_truthy
+      end
+
+      let(:test_validator) { 'minValue5,maxValue10' }
+      it 'returns true when min value < value == max value' do
+        expect(validate).to be_truthy
+      end
+
+      let(:test_validator) { 'minValue10,maxValue10' }
+      it 'returns true when min value == value == max value' do
+        expect(validate).to be_truthy
+      end
+    end
+
+    context 'is_invalid' do
+      let(:test_validator) { 'minValue15,maxValue25' }
+      it 'returns false when value < min value' do
+        expect(validate).to be_falsy
+      end
+
+      let(:test_validator) { 'minValue5,maxValue8' }
+      it 'returns false when value > max value' do
+        expect(validate).to be_falsy
+      end
+    end
+  end
+
+  describe 'min_length and max_length' do
+    let(:test_value) { 'Lorem ipsum' }
+    context 'is_valid' do
+      let(:test_validator) { 'minLength5,maxLength15' }
+      it 'returns true when min length < length < max length' do
+        expect(validate).to be_truthy
+      end
+
+      let(:test_validator) { "minLength11,maxLength15" }
+      it 'returns true when min length == length < max length' do
+        expect(validate).to be_truthy
+      end
+
+      let(:test_validator) { "minLength5,maxLength11" }
+      it 'returns true when min length < length == max length' do
+        expect(validate).to be_truthy
+      end
+
+      let(:test_validator) { "minLength11,maxLength11" }
+      it 'returns true when min length == length == max length' do
+        expect(validate).to be_truthy
+      end
+    end
+
+    context 'is_invalid' do
+      let(:test_validator) { 'minLength15,maxLength25' }
+      it 'returns false when length < min length' do
+        expect(validate).to be_falsy
+      end
+
+      let(:test_validator) { 'minLength5,maxLength8' }
+      it 'returns false when length > max length' do
+        expect(validate).to be_falsy
+      end
+    end
+  end
+
+  describe 'min_date and max_date' do
+    let(:test_value) { '20190809' }
+    context 'is_valid' do
+      let(:test_validator) { 'minDate20190808,maxDate20190810' }
+      it 'returns true when min date < date < max date' do
+        expect(validate).to be_truthy
+      end
+
+      let(:test_validator) { 'minDate20190809,maxDate20190810' }
+      it 'returns true when min date == date < max date' do
+        expect(validate).to be_truthy
+      end
+
+      let(:test_validator) { 'minDate20190808,maxDate20190809' }
+      it 'returns true when min date < date == max date' do
+        expect(validate).to be_truthy
+      end
+
+      let(:test_validator) { 'minDate20190809,maxDate20190809' }
+      it 'returns true when min date == date == max date' do
+        expect(validate).to be_truthy
+      end
+    end
+
+    context 'is_invalid' do
+      let(:test_validator) { 'minDate20190815,maxDate20190820' }
+      it 'returns true when date < min date' do
+        expect(validate).to be_falsy
+      end
+
+      let(:test_validator) { 'minDate20190801,maxDate20190806' }
+      it 'returns true when date > max date' do
+        expect(validate).to be_falsy
+      end
+    end
+  end
 end
