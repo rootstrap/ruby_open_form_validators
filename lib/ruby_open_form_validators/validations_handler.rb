@@ -7,46 +7,46 @@ module RubyOpenFormValidators
     def min_value(value, validator)
       expected_value = Parser.remove_non_digits(validator).to_i
       valid = value.to_i >= expected_value
-      create_response(valid, "#{value.to_i} should be greater than #{expected_value}")
+      create_response(valid, "Value must be greater than #{expected_value}")
     end
 
     def max_value(value, validator)
       expected_value = Parser.remove_non_digits(validator).to_i
       valid = value.to_i <= expected_value
-      create_response(valid, "#{value.to_i} should be less than #{expected_value}")
+      create_response(valid, "Value must be less than #{expected_value}")
     end
 
     def min_length(value, validator)
       expected_length = Parser.remove_non_digits(validator).to_i
       valid = value.length >= expected_length
-      create_response(valid, "Should be longer than #{expected_length} characters")
+      create_response(valid, "Length must be longer than #{expected_length} characters")
     end
 
     def max_length(value, validator)
       expected_length = Parser.remove_non_digits(validator).to_i
       valid = value.length <= expected_length
-      create_response(valid, "Should be shorter than #{expected_length} characters")
+      create_response(valid, "Length must be shorter than #{expected_length} characters")
     end
 
     def min_date(value, validator)
       expected_date = Parser.format_date(validator)
       date = Parser.format_date(value)
       valid = date >= expected_date
-      create_response(valid, "Date should be after #{Parser.to_date_format(expected_date)}")
+      create_response(valid, "Date must be after #{Parser.to_date_format(expected_date)}")
     end
 
     def max_date(value, validator)
       expected_date = Parser.format_date(validator)
       date = Parser.format_date(value)
       valid = date <= expected_date
-      create_response(valid, "Date should be before #{Parser.to_date_format(expected_date)}")
+      create_response(valid, "Date must be before #{Parser.to_date_format(expected_date)}")
     end
 
     def earliest_today(value, _)
       expected_date = DateTime.now.utc.beginning_of_day
       date = Parser.format_date(value)
       valid = date >= expected_date
-      create_response(valid, "Date should be after today's date")
+      create_response(valid, "Date must be after today's date")
     end
 
     def email(value, _)
