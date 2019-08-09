@@ -1,6 +1,6 @@
 # RubyOpenFormValidators
 
-Ruby gem for validating OpenForm. It supports several validators such as *minValue*, *maxValue*, *minLength*, *maxLength*, *minDate, *maxDate, *earliestToday, *email*
+Ruby impementation of the Open Form Validators library (https://github.com/rootstrap/open-form-validators). It supports several validators such as *minValue*, *maxValue*, *minLength*, *maxLength*, *minDate, *maxDate, *earliestToday*, *email* and also combinations.
 
 ## Installation
 
@@ -20,38 +20,44 @@ Or install it yourself as:
 
 ## Usage
 
-Passing validations will return the same result.
+It can be used using a single or a combined validator string.
+
+Passing validations will return the same result:
 ```ruby
-$ RubyOpenFormValidators.validate("50", "minValue25"):
-{ valid: true, message: nil }
+$ RubyOpenFormValidators.validate("50", "minValue25")
+{ text: "50", valid: true, messages: [] }
+
+$ RubyOpenFormValidators.validate("Lorem ipsum", "minLength5, maxLength15")
+{ text: "Lorem ipsum", valid: true, messages: [] }
 ```
 
-Failing validations will return different messages according to the used validator.
-Examples of every supported validator:
+Failing validations will return different messages according to the used validators.
 ```ruby
+# Single validator examples:
 $ RubyOpenFormValidators.validate("20", "minValue25")
-{ valid: false, message: "20 should be greater than 25" }
+{ text: "20", valid: false, message: "Value must be greater than 25" }
 
-$ RubyOpenFormValidators.validate("100", "maxValue80")
-{ valid: false, message: "100 should be less than 80" }
-
-$ RubyOpenFormValidators.validate("hello world", "minLength20")
-{ valid: false, message: "Should be longer than 20 characters" }
-
-$ RubyOpenFormValidators.validate("hello world", "maxLength8")
-{ valid: false, message: "Should be shorter than 8 characters" }
+$ RubyOpenFormValidators.validate("Lorem ipsum", "maxLength5")
+{ text: "Lorem ipsum", valid: false, message: "Length must be shorter than 5 characters" }
 
 $ RubyOpenFormValidators.validate("20190905", "minDate20190806")
-{ valid: false, message: "Date should be after 20190806" }
-
-$ RubyOpenFormValidators.validate("20190907", "maxDate20190806")
-{ valid: false, message: "Date should be before 20190806" }
+{ text: "20190905", valid: false, message: "Date must be after 20190806" }
 
 $ RubyOpenFormValidators.validate("20181206", "earliestToday")
-{ valid: false, message: "Date should be after today's date" }
+{ text: "20181206", valid: false, message: "Date must be after today's date" }
 
 $ RubyOpenFormValidators.validate("@example.com", "email")
-{ valid: false, message: "Wrong email format" }
+{ text: @example., valid: false, message: "Wrong email format" }
+
+# Combined validator examples:
+$ RubyOpenFormValidators.validate("20", "minValue25,maxValue30")
+{ text: "20", valid: false, message: "Value must be greater than 25" }
+
+$ RubyOpenFormValidators.validate("Lorem ipsum", "minLength2,maxLength5")
+{ text: "Lorem ipsum", valid: false, message: "Length must be shorter than 5 characters" }
+
+$ RubyOpenFormValidators.validate("20190905", "minDate20190806,maxDate20190810")
+{ text: "20190905", valid: false, message: "Date must be after 20190806" }
 ```
 
 ## Development
