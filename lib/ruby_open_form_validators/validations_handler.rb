@@ -43,9 +43,9 @@ module RubyOpenFormValidators
     end
 
     def earliest_today(value, _)
-      expected_date = DateTime.now.utc.beginning_of_day
+      today = Parser.format_date(DateTime.now.beginning_of_day.strftime(Constants::DATE_FORMAT))
       date = Parser.format_date(value)
-      valid = date >= expected_date
+      valid = date >= today
       create_response(valid, "Date must be after today's date")
     end
 
