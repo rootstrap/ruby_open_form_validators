@@ -5,26 +5,26 @@ require "active_support/core_ext/date_time/calculations"
 module RubyOpenFormValidators
   module ValidationsHandler extend self
     def min_value(value, validator)
-      expected_value = Parser.remove_non_digits(validator).to_i
-      valid = value.to_i >= expected_value
+      expected_value = Parser.remove_non_digits(validator)
+      valid = Parser.to_number(value) >= Parser.to_number(expected_value)
       create_response(valid, "Value must be greater than #{expected_value}")
     end
 
     def max_value(value, validator)
-      expected_value = Parser.remove_non_digits(validator).to_i
-      valid = value.to_i <= expected_value
+      expected_value = Parser.remove_non_digits(validator)
+      valid = Parser.to_number(value) <= Parser.to_number(expected_value)
       create_response(valid, "Value must be less than #{expected_value}")
     end
 
     def min_length(value, validator)
-      expected_length = Parser.remove_non_digits(validator).to_i
-      valid = value.length >= expected_length
+      expected_length = Parser.remove_non_digits(validator)
+      valid = value.length >= Parser.to_number(expected_length)
       create_response(valid, "Length must be longer than #{expected_length} characters")
     end
 
     def max_length(value, validator)
-      expected_length = Parser.remove_non_digits(validator).to_i
-      valid = value.length <= expected_length
+      expected_length = Parser.remove_non_digits(validator)
+      valid = value.length <= Parser.to_number(expected_length)
       create_response(valid, "Length must be shorter than #{expected_length} characters")
     end
 

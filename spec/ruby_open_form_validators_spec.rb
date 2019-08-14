@@ -11,53 +11,109 @@ RSpec.describe RubyOpenFormValidators do
   end
 
   describe 'min_value' do
-    let(:test_value) { '10' }
+    context 'when value is an integer' do
+      let(:test_value) { '10' }
 
-    context 'when is valid' do
-      let(:test_validator) { 'minValue5' }
+      context 'when is valid' do
+        context 'value > min_value' do
+          let(:test_validator) { 'minValue5' }
 
-      it 'returns true for value > min_value' do
-        expect(validate).to be_truthy
+          it { expect(validate).to be_truthy }
+        end
+
+        context 'value == min_value' do
+          let(:test_validator) { 'minValue10' }
+
+          it { expect(validate).to be_truthy }
+        end
       end
 
-      let(:test_validator) { 'minValue10' }
+      context 'when is invalid' do
+        let(:test_validator) { 'minValue15' }
 
-      it 'returns true for value == min_value' do
-        expect(validate).to be_truthy
+        context 'value < min_value' do
+          it { expect(validate).to be_falsy }
+        end
       end
     end
 
-    context 'when is invalid' do
-      let(:test_validator) { 'minValue15' }
+    context 'when value is a float' do
+      let(:test_value) { '10.5' }
 
-      it 'returns false for value < min_value' do
-        expect(validate).to be_falsy
+      context 'when is valid' do
+        context 'value > min_value' do
+          let(:test_validator) { 'minValue5.9' }
+
+          it { expect(validate).to be_truthy }
+        end
+
+        context 'value == min_value' do
+          let(:test_validator) { 'minValue10.5' }
+
+          it { expect(validate).to be_truthy }
+        end
+      end
+
+      context 'when is invalid' do
+        let(:test_validator) { 'minValue10.6' }
+
+        context 'value < min_value' do
+          it { expect(validate).to be_falsy }
+        end
       end
     end
   end
 
   describe 'max_value' do
-    let(:test_value) { '10' }
+    context 'when value is an integer' do
+      let(:test_value) { '10' }
 
-    context 'when is valid' do
-      let(:test_validator) { 'maxValue15' }
+      context 'when is valid' do
+        context 'value < max_value' do
+          let(:test_validator) { 'maxValue15' }
 
-      it 'returns true for value < max_value' do
-        expect(validate).to be_truthy
+          it { expect(validate).to be_truthy }
+        end
+
+        context 'value == max_value' do
+          let(:test_validator) { 'maxValue10' }
+
+          it { expect(validate).to be_truthy }
+        end
       end
 
-      let(:test_validator) { 'maxValue10' }
+      context 'when is invalid' do
+        let(:test_validator) { 'maxValue5' }
 
-      it 'returns true for value == max_value' do
-        expect(validate).to be_truthy
+        context 'value > max_value' do
+          it { expect(validate).to be_falsy }
+        end
       end
     end
 
-    context 'when is invalid' do
-      let(:test_validator) { 'maxValue5' }
+    context 'when value is a float' do
+      let(:test_value) { '10.5' }
 
-      it 'returns false for value > max_value' do
-        expect(validate).to be_falsy
+      context 'when is valid' do
+        context 'value < max_value' do
+          let(:test_validator) { 'maxValue10.9' }
+
+          it { expect(validate).to be_truthy }
+        end
+
+        context 'value == max_value' do
+          let(:test_validator) { 'maxValue10.5' }
+
+          it { expect(validate).to be_truthy }
+        end
+      end
+
+      context 'when is invalid' do
+        let(:test_validator) { 'maxValue1.3' }
+
+        context 'value > max_value' do
+          it { expect(validate).to be_falsy }
+        end
       end
     end
   end
