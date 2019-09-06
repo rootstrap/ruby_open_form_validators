@@ -1,7 +1,10 @@
 require "bundler/setup"
 require "ruby_open_form_validators"
+require "helpers/date_helper"
 
 RSpec.configure do |config|
+  include DateHelper
+
   # Enable flags like --only-failures and --next-failure
   config.example_status_persistence_file_path = ".rspec_status"
 
