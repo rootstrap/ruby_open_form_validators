@@ -10,6 +10,12 @@ RSpec.describe RubyOpenFormValidators do
     result[:valid]
   end
 
+  subject(:validate_response) do
+    RubyOpenFormValidators.validate(test_value, test_validator)
+  end
+
+  let(:sample_string) { 'Lorem Ipsum' }
+
   describe 'min_value' do
     context 'when value is an integer' do
       let(:test_value) { '10' }
@@ -48,6 +54,15 @@ RSpec.describe RubyOpenFormValidators do
         it 'returns false when value < min_value' do
           expect(validate).to be_falsy
         end
+      end
+    end
+
+    context 'when value is not a number' do
+      let(:test_value) { sample_string }
+      let(:test_validator) { 'minValue5.9' }
+
+      it 'returns false' do
+        expect(validate_response).to include({ valid: false, messages: ['invalid numeric value'] })
       end
     end
   end
@@ -92,10 +107,19 @@ RSpec.describe RubyOpenFormValidators do
         end
       end
     end
+
+    context 'when value is not a number' do
+      let(:test_value) { sample_string }
+      let(:test_validator) { 'maxValue10' }
+
+      it 'returns false' do
+        expect(validate_response).to include({ valid: false, messages: ['invalid numeric value'] })
+      end
+    end
   end
 
   describe 'min_length' do
-    let(:test_value) { 'Lorem ipsum' }
+    let(:test_value) { sample_string }
 
     context 'when is valid' do
       let(:test_validator) { 'minLength5' }
@@ -115,7 +139,7 @@ RSpec.describe RubyOpenFormValidators do
   end
 
   describe 'max_length' do
-    let(:test_value) { 'Lorem ipsum' }
+    let(:test_value) { sample_string }
 
     context 'when is valid' do
       let(:test_validator) { 'maxLength15' }
@@ -135,9 +159,8 @@ RSpec.describe RubyOpenFormValidators do
   end
 
   describe 'min_date' do
-    let(:test_value) { '20190810' }
-
     context 'when is valid' do
+      let(:test_value) { '20190810' }
       let(:test_validator) { 'minDate20190805' }
 
       it 'returns true for date > min_date' do
@@ -146,18 +169,29 @@ RSpec.describe RubyOpenFormValidators do
     end
 
     context 'when is invalid' do
-      let(:test_validator) { 'minDate20190815' }
+      context 'with valid date format' do
+        let(:test_value) { '20190810' }
+        let(:test_validator) { 'minDate20190815' }
 
-      it 'returns false for date < min_date' do
-        expect(validate).to be_falsy
+        it 'returns false for date < min_date' do
+          expect(validate).to be_falsy
+        end
+      end
+
+      context 'with invalid date format' do
+        let(:test_value) { sample_string }
+        let(:test_validator) { 'minDate20190815' }
+
+        it 'returns false' do
+          expect(validate_response).to include({ valid: false, messages: ['invalid date'] })
+        end
       end
     end
   end
 
   describe 'max_date' do
-    let(:test_value) { '20190810' }
-
     context 'when is valid' do
+      let(:test_value) { '20190810' }
       let(:test_validator) { 'maxDate20190815' }
 
       it 'returns true for date < max_date' do
@@ -166,10 +200,22 @@ RSpec.describe RubyOpenFormValidators do
     end
 
     context 'when is invalid' do
-      let(:test_validator) { 'maxDate20190805' }
+      context 'with valid date format' do
+        let(:test_value) { '20190810' }
+        let(:test_validator) { 'maxDate20190805' }
 
-      it 'returns false for date > max_date' do
-        expect(validate).to be_falsy
+        it 'returns false for date > max_date' do
+          expect(validate).to be_falsy
+        end
+      end
+
+      context 'with invalid date format' do
+        let(:test_value) { sample_string }
+        let(:test_validator) { 'minDate20190815' }
+
+        it 'returns false' do
+          expect(validate_response).to include({ valid: false, messages: ['invalid date'] })
+        end
       end
     end
   end
@@ -196,11 +242,20 @@ RSpec.describe RubyOpenFormValidators do
     end
 
     context 'when is invalid' do
-      let(:test_value) { to_date_format(2.days.ago) }
-      let(:test_validator) { 'earliestToday' }
+      context 'with valid date format' do
+        let(:test_value) { to_date_format(2.days.ago) }
 
-      it 'returns false for date < today' do
-        expect(validate).to be_falsy
+        it 'returns false for date < today' do
+          expect(validate).to be_falsy
+        end
+      end
+
+      context 'with invalid date format' do
+        let(:test_value) { sample_string }
+
+        it 'returns false' do
+          expect(validate_response).to include({ valid: false, messages: ['invalid date'] })
+        end
       end
     end
   end
@@ -274,7 +329,7 @@ RSpec.describe RubyOpenFormValidators do
   end
 
   describe 'min_length and max_length' do
-    let(:test_value) { 'Lorem ipsum' }
+    let(:test_value) { sample_string }
 
     context 'when is valid' do
       let(:test_validator) { 'minLength5,maxLength15' }
