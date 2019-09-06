@@ -179,7 +179,7 @@ RSpec.describe RubyOpenFormValidators do
 
     context 'when is valid' do
       context 'today' do
-        let(:test_value) { RubyOpenFormValidators::Parser.to_date_format(DateTime.now) }
+        let(:test_value) { to_date_format(DateTime.now) }
 
         it 'returns true for date == today' do
           expect(validate).to be_truthy
@@ -187,7 +187,7 @@ RSpec.describe RubyOpenFormValidators do
       end
 
       context 'next_week' do
-        let(:test_value) { RubyOpenFormValidators::Parser.to_date_format(1.week.from_now) }
+        let(:test_value) { to_date_format(1.week.from_now) }
 
         it 'returns true for date > today' do
           expect(validate).to be_truthy
@@ -196,7 +196,7 @@ RSpec.describe RubyOpenFormValidators do
     end
 
     context 'when is invalid' do
-      let(:test_value) { RubyOpenFormValidators::Parser.to_date_format(2.days.ago) }
+      let(:test_value) { to_date_format(2.days.ago) }
       let(:test_validator) { 'earliestToday' }
 
       it 'returns false for date < today' do
