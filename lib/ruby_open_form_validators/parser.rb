@@ -10,20 +10,14 @@ module RubyOpenFormValidators
       string.gsub(/\d+(.\d+(e[+-]\d+)?)?/, '') if string.respond_to?(:gsub)
     end
 
-    def format_date(date)
-      DateTime.parse(date, Constants::DATE_FORMAT)
+    def to_date!(attribute)
+      Date.parse(attribute, Constants::DATE_FORMAT)
     end
 
-    def to_date_format(date)
-      date.strftime(Constants::DATE_FORMAT) if date.respond_to?(:strftime)
-    end
-
-    def to_number(string_number)
-      if numeric?(string_number)
-        string_number.to_f == string_number.to_i ? string_number.to_i : string_number.to_f
-      else
-        string_number
-      end
+    def to_number!(attribute)
+      return attribute if attribute.is_a?(Numeric)
+      return attribute.to_f if attribute.is_a?(String) && numeric?(attribute)
+      raise "invalid numeric value"
     end
 
     def numeric?(string_number)
