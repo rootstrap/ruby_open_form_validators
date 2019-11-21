@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/rootstrap/ruby_open_form_validators.svg?branch=master)](https://travis-ci.org/rootstrap/ruby_open_form_validators)
+
 # RubyOpenFormValidators
 
 Ruby impementation of the Open Form Validators library (https://github.com/rootstrap/open-form-validators). It supports several validators such as *minValue*, *maxValue*, *minLength*, *maxLength*, *minDate, *maxDate, *earliestToday*, *email* and also combinations.
@@ -68,7 +70,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/ruby_open_form_validators. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Please read our [CONTRIBUTING](https://github.com/rootstrap/ruby_open_form_validators/blob/master/CONTRIBUTING.md) and our [CODE_OF_CONDUCT](https://github.com/rootstrap/ruby_open_form_validators/blob/master/CODE_OF_CONDUCT.md) files for details on our code of conduct, and the process for submitting pull requests to us.
 
 ## License
 
@@ -77,3 +79,10 @@ The gem is available as open source under the terms of the [MIT License](https:/
 ## Code of Conduct
 
 Everyone interacting in the RubyOpenFormValidators project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/rootstrap/ruby_open_form_validators/blob/master/CODE_OF_CONDUCT.md).
+
+## Credits
+
+RubyOpenFormValidators is maintained by [Rootstrap](http://www.rootstrap.com) with the help of our
+[contributors](https://github.com/rootstrap/ruby_open_form_validators/contributors).
+
+[<img src="https://s3-us-west-1.amazonaws.com/rootstrap.com/img/rs.png" width="100"/>](http://www.rootstrap.com)

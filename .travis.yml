@@ -1,7 +1,14 @@
----
-sudo: false
 language: ruby
+
+before_install: gem install bundler -v 2.0.2
+
 cache: bundler
+
 rvm:
   - 2.4.1
-before_install: gem install bundler -v 2.0.2
+
+sudo: false
+
+script:
+  - bundle exec rake code_analysis
+  - bundle exec rspec
