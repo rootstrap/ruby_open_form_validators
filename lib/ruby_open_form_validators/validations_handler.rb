@@ -1,9 +1,13 @@
-require "ruby_open_form_validators/parser"
-require "ruby_open_form_validators/constants"
-require "active_support/core_ext/date_time/calculations"
+# frozen_string_literal: true
+
+require 'ruby_open_form_validators/parser'
+require 'ruby_open_form_validators/constants'
+require 'active_support/core_ext/date_time/calculations'
 
 module RubyOpenFormValidators
-  module ValidationsHandler extend self
+  module ValidationsHandler
+    extend self
+
     def min_value(value, validator)
       handler do
         expected_value = Parser.remove_non_digits(validator)
@@ -73,11 +77,9 @@ module RubyOpenFormValidators
     end
 
     def handler
-      begin
-        yield
-      rescue => error
-        create_response(false, error.message)
-      end
+      yield
+    rescue StandardError => e
+      create_response(false, e.message)
     end
   end
 end

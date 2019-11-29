@@ -1,4 +1,6 @@
-require "active_support/core_ext/numeric/time"
+# frozen_string_literal: true
+
+require 'active_support/core_ext/numeric/time'
 
 RSpec.describe RubyOpenFormValidators do
   it 'has a version number' do
@@ -62,7 +64,7 @@ RSpec.describe RubyOpenFormValidators do
       let(:test_validator) { 'minValue5.9' }
 
       it 'returns false' do
-        expect(validate_response).to include({ valid: false, messages: ['invalid numeric value'] })
+        expect(validate_response).to include(valid: false, messages: ['invalid numeric value'])
       end
     end
   end
@@ -113,7 +115,7 @@ RSpec.describe RubyOpenFormValidators do
       let(:test_validator) { 'maxValue10' }
 
       it 'returns false' do
-        expect(validate_response).to include({ valid: false, messages: ['invalid numeric value'] })
+        expect(validate_response).to include(valid: false, messages: ['invalid numeric value'])
       end
     end
   end
@@ -183,7 +185,7 @@ RSpec.describe RubyOpenFormValidators do
         let(:test_validator) { 'minDate20190815' }
 
         it 'returns false' do
-          expect(validate_response).to include({ valid: false, messages: ['invalid date'] })
+          expect(validate_response).to include(valid: false, messages: ['invalid date'])
         end
       end
     end
@@ -214,7 +216,7 @@ RSpec.describe RubyOpenFormValidators do
         let(:test_validator) { 'minDate20190815' }
 
         it 'returns false' do
-          expect(validate_response).to include({ valid: false, messages: ['invalid date'] })
+          expect(validate_response).to include(valid: false, messages: ['invalid date'])
         end
       end
     end
@@ -254,7 +256,7 @@ RSpec.describe RubyOpenFormValidators do
         let(:test_value) { sample_string }
 
         it 'returns false' do
-          expect(validate_response).to include({ valid: false, messages: ['invalid date'] })
+          expect(validate_response).to include(valid: false, messages: ['invalid date'])
         end
       end
     end
@@ -281,7 +283,7 @@ RSpec.describe RubyOpenFormValidators do
       end
 
       context 'having special characters' do
-        let(:test_value) { "example_12.3!@example.com" }
+        let(:test_value) { 'example_12.3!@example.com' }
 
         it 'returns true for correct email format' do
           expect(validate).to be_truthy
