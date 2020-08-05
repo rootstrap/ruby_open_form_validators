@@ -1,3 +1,7 @@
+env:
+  global:
+    - CC_TEST_REPORTER_ID=495ac15aa01f24dcfe0b3467e5093e99c32b6b56b1cb774489edd17207631fd6
+
 language: ruby
 
 before_install: gem install bundler -v 2.0.2
